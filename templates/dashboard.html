@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard - Caregivers Platform{% endblock %}
+
+{% block content %}
+<h2>📊 Platform Dashboard</h2>
+
+<div class="stats-grid">
+    <div class="stat-card">
+        <h3>Total Users</h3>
+        <div class="number">{{ stats.total_users }}</div>
+    </div>
+
+    <div class="stat-card">
+        <h3>Caregivers</h3>
+        <div class="number">{{ stats.total_caregivers }}</div>
+    </div>
+
+    <div class="stat-card">
+        <h3>Members</h3>
+        <div class="number">{{ stats.total_members }}</div>
+    </div>
+
+    <div class="stat-card">
+        <h3>Job Postings</h3>
+        <div class="number">{{ stats.total_jobs }}</div>
+    </div>
+
+    <div class="stat-card">
+        <h3>Applications</h3>
+        <div class="number">{{ stats.total_applications }}</div>
+    </div>
+
+    <div class="stat-card">
+        <h3>Appointments</h3>
+        <div class="number">{{ stats.total_appointments }}</div>
+    </div>
+
+    <div class="stat-card">
+        <h3>Accepted Appointments</h3>
+        <div class="number">{{ stats.accepted_appointments }}</div>
+    </div>
+</div>
+
+<div style="margin-top: 30px;">
+    <a href="{{ url_for('index') }}" class="btn btn-primary">← Back to Home</a>
+</div>
+{% endblock %}

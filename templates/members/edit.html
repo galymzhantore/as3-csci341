@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block title %}Edit Member{% endblock %}
+{% block content %}
+<h2>✏️ Edit Member</h2>
+<p style="margin-bottom: 20px;"><strong>User:</strong> {{ user.given_name }} {{ user.surname }} ({{ user.email }})</p>
+<form method="POST">
+    <div class="form-group">
+        <label for="house_rules">House Rules</label>
+        <textarea id="house_rules" name="house_rules">{{ member.house_rules or '' }}</textarea>
+    </div>
+    <div class="form-group">
+        <label for="dependent_description">Dependent Description</label>
+        <textarea id="dependent_description"
+            name="dependent_description">{{ member.dependent_description or '' }}</textarea>
+    </div>
+    <button type="submit" class="btn btn-success">Update Member</button>
+    <a href="{{ url_for('list_members') }}" class="btn btn-primary">Cancel</a>
+</form>
+{% endblock %}

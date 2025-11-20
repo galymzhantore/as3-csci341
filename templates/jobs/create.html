@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block title %}Create Job{% endblock %}
+{% block content %}
+<h2>➕ Create New Job Posting</h2>
+<form method="POST">
+    <div class="form-group">
+        <label for="member_id">Posted By (Member) *</label>
+        <select id="member_id" name="member_id" required>
+            <option value="">-- Select a member --</option>
+            {% for member, user in members %}
+            <option value="{{ member.member_user_id }}">{{ user.given_name }} {{ user.surname }} ({{ user.email }})
+            </option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="caregiving_type">Required Caregiving Type *</label>
+        <select id="caregiving_type" name="caregiving_type" required>
+            <option value="Babysitter">Babysitter</option>
+            <option value="Elderly Care">Elderly Care</option>
+            <option value="Playmate">Playmate</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="date_posted">Date Posted *</label>
+        <input type="date" id="date_posted" name="date_posted" required>
+    </div>
+    <div class="form-group">
+        <label for="other_requirements">Other Requirements</label>
+        <textarea id="other_requirements" name="other_requirements"></textarea>
+    </div>
+    <button type="submit" class="btn btn-success">Create Job</button>
+    <a href="{{ url_for('list_jobs') }}" class="btn btn-primary">Cancel</a>
+</form>
+{% endblock %}

@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}Edit Appointment{% endblock %}
+{% block content %}
+<h2>✏️ Edit Appointment</h2>
+<form method="POST">
+    <div class="form-group">
+        <label for="appointment_date">Appointment Date *</label>
+        <input type="date" id="appointment_date" name="appointment_date" value="{{ appointment.appointment_date }}"
+            required>
+    </div>
+    <div class="form-group">
+        <label for="appointment_time">Appointment Time *</label>
+        <input type="time" id="appointment_time" name="appointment_time" value="{{ appointment.appointment_time }}"
+            required>
+    </div>
+    <div class="form-group">
+        <label for="work_hours">Work Hours *</label>
+        <input type="number" id="work_hours" name="work_hours" value="{{ appointment.work_hours }}" min="1" required>
+    </div>
+    <div class="form-group">
+        <label for="status">Status *</label>
+        <select id="status" name="status" required>
+            <option value="pending" {% if appointment.status=='pending' %}selected{% endif %}>Pending</option>
+            <option value="accepted" {% if appointment.status=='accepted' %}selected{% endif %}>Accepted</option>
+            <option value="declined" {% if appointment.status=='declined' %}selected{% endif %}>Declined</option>
+            <option value="completed" {% if appointment.status=='completed' %}selected{% endif %}>Completed</option>
+        </select>
+    </div>
+    <button type="submit" class="btn btn-success">Update Appointment</button>
+    <a href="{{ url_for('list_appointments') }}" class="btn btn-primary">Cancel</a>
+</form>
+{% endblock %}

@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block title %}Members{% endblock %}
+{% block content %}
+<h2>👨‍👩‍👧 All Members</h2>
+<div style="margin: 20px 0;">
+    <a href="{{ url_for('create_member') }}" class="btn btn-success">+ Create New Member</a>
+</div>
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>City</th>
+            <th>House Rules</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for member, user in members %}
+        <tr>
+            <td>{{ member.member_user_id }}</td>
+            <td>{{ user.given_name }} {{ user.surname }}</td>
+            <td>{{ user.email }}</td>
+            <td>{{ user.city }}</td>
+            <td>{{ (member.house_rules or '')[:50] }}{% if member.house_rules and member.house_rules|length > 50 %}...{%
+                endif %}</td>
+            <td>
+                <div class="actions">
+                    <a href="{{ url_for('edit_member', member_id=member.member_user_id) }}"
+                        class="btn btn-warning">Edit</a>
+                    <form method="POST" action="{{ url_for('delete_member', member_id=member.member_user_id) }}"
+                        style="display: inline; margin: 0; padding: 0; background: none;">
+                        <button type="submit" class="btn btn-danger"
+                            onclick="return confirm('Delete this member?')">Delete</button>
+                    </form>
+                </div>
+            </td>
+        </tr>
+        {% else %}
+        <tr>
+            <td colspan="6" style="text-align: center; padding: 40px; color: #999;">No members found.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<a href="{{ url_for('index') }}" class="btn btn-primary">← Back</a>
+{% endblock %}

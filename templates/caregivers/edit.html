@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block title %}Edit Caregiver{% endblock %}
+{% block content %}
+<h2>✏️ Edit Caregiver</h2>
+<p style="margin-bottom: 20px;"><strong>User:</strong> {{ user.given_name }} {{ user.surname }} ({{ user.email }})</p>
+<form method="POST">
+    <div class="form-group">
+        <label for="gender">Gender *</label>
+        <select id="gender" name="gender" required>
+            <option value="Male" {% if caregiver.gender=='Male' %}selected{% endif %}>Male</option>
+            <option value="Female" {% if caregiver.gender=='Female' %}selected{% endif %}>Female</option>
+            <option value="Other" {% if caregiver.gender=='Other' %}selected{% endif %}>Other</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="caregiving_type">Caregiving Type *</label>
+        <select id="caregiving_type" name="caregiving_type" required>
+            <option value="Babysitter" {% if caregiver.caregiving_type=='Babysitter' %}selected{% endif %}>Babysitter
+            </option>
+            <option value="Elderly Care" {% if caregiver.caregiving_type=='Elderly Care' %}selected{% endif %}>Elderly
+                Care</option>
+            <option value="Playmate" {% if caregiver.caregiving_type=='Playmate' %}selected{% endif %}>Playmate</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="hourly_rate">Hourly Rate ($) *</label>
+        <input type="number" step="0.01" id="hourly_rate" name="hourly_rate" value="{{ caregiver.hourly_rate }}"
+            required>
+    </div>
+    <div class="form-group">
+        <label for="photo">Photo URL</label>
+        <input type="text" id="photo" name="photo" value="{{ caregiver.photo or '' }}">
+    </div>
+    <button type="submit" class="btn btn-success">Update Caregiver</button>
+    <a href="{{ url_for('list_caregivers') }}" class="btn btn-primary">Cancel</a>
+</form>
+{% endblock %}

@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}Create Member{% endblock %}
+{% block content %}
+<h2>➕ Create New Member</h2>
+<form method="POST">
+    <div class="form-group">
+        <label for="user_id">Select User *</label>
+        <select id="user_id" name="user_id" required>
+            <option value="">-- Select a user --</option>
+            {% for user in users %}
+            <option value="{{ user.user_id }}">{{ user.given_name }} {{ user.surname }} ({{ user.email }})</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="house_rules">House Rules</label>
+        <textarea id="house_rules" name="house_rules"></textarea>
+    </div>
+    <div class="form-group">
+        <label for="dependent_description">Dependent Description</label>
+        <textarea id="dependent_description" name="dependent_description"></textarea>
+    </div>
+    <button type="submit" class="btn btn-success">Create Member</button>
+    <a href="{{ url_for('list_members') }}" class="btn btn-primary">Cancel</a>
+</form>
+{% endblock %}
