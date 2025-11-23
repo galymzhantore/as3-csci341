@@ -5,44 +5,58 @@
 {% block content %}
 <h2>📊 Platform Dashboard</h2>
 
-<div class="stats-grid">
-    <div class="stat-card">
-        <h3>Total Users</h3>
-        <div class="number">{{ stats.total_users }}</div>
+<div class="grid-container">
+    <div class="card" style="text-align: center;">
+        <h3 style="color: var(--text-muted); font-size: 1rem; text-transform: uppercase; letter-spacing: 0.05em;">Total
+            Users</h3>
+        <p style="font-size: 2.5rem; font-weight: 700; color: var(--primary); margin: 0.5rem 0;">{{ stats.total_users }}
+        </p>
     </div>
 
-    <div class="stat-card">
-        <h3>Caregivers</h3>
-        <div class="number">{{ stats.total_caregivers }}</div>
+    <div class="card" style="text-align: center;">
+        <h3 style="color: var(--text-muted); font-size: 1rem; text-transform: uppercase; letter-spacing: 0.05em;">
+            Caregivers</h3>
+        <p style="font-size: 2.5rem; font-weight: 700; color: var(--success); margin: 0.5rem 0;">{{
+            stats.total_caregivers }}</p>
     </div>
 
-    <div class="stat-card">
-        <h3>Members</h3>
-        <div class="number">{{ stats.total_members }}</div>
+    <div class="card" style="text-align: center;">
+        <h3 style="color: var(--text-muted); font-size: 1rem; text-transform: uppercase; letter-spacing: 0.05em;">
+            Members</h3>
+        <p style="font-size: 2.5rem; font-weight: 700; color: var(--warning); margin: 0.5rem 0;">{{ stats.total_members
+            }}</p>
     </div>
 
-    <div class="stat-card">
-        <h3>Job Postings</h3>
-        <div class="number">{{ stats.total_jobs }}</div>
+    <div class="card" style="text-align: center;">
+        <h3 style="color: var(--text-muted); font-size: 1rem; text-transform: uppercase; letter-spacing: 0.05em;">Active
+            Jobs</h3>
+        <p style="font-size: 2.5rem; font-weight: 700; color: var(--text-main); margin: 0.5rem 0;">{{ stats.total_jobs
+            }}</p>
     </div>
 
-    <div class="stat-card">
-        <h3>Applications</h3>
-        <div class="number">{{ stats.total_applications }}</div>
+    <div class="card" style="text-align: center;">
+        <h3 style="color: var(--text-muted); font-size: 1rem; text-transform: uppercase; letter-spacing: 0.05em;">
+            Applications</h3>
+        <p style="font-size: 2.5rem; font-weight: 700; color: var(--text-main); margin: 0.5rem 0;">{{
+            stats.total_applications }}</p>
     </div>
 
-    <div class="stat-card">
-        <h3>Appointments</h3>
-        <div class="number">{{ stats.total_appointments }}</div>
+    <div class="card" style="text-align: center;">
+        <h3 style="color: var(--text-muted); font-size: 1rem; text-transform: uppercase; letter-spacing: 0.05em;">
+            Appointments</h3>
+        <p style="font-size: 2.5rem; font-weight: 700; color: var(--primary); margin: 0.5rem 0;">{{
+            stats.total_appointments }}</p>
     </div>
 
-    <div class="stat-card">
-        <h3>Accepted Appointments</h3>
-        <div class="number">{{ stats.accepted_appointments }}</div>
+    <div class="card" style="text-align: center;">
+        <h3 style="color: var(--text-muted); font-size: 1rem; text-transform: uppercase; letter-spacing: 0.05em;">
+            Accepted</h3>
+        <p style="font-size: 2.5rem; font-weight: 700; color: var(--success); margin: 0.5rem 0;">{{
+            stats.accepted_appointments }}</p>
     </div>
 </div>
 
-<div style="margin-top: 30px;">
-    <a href="{{ url_for('index') }}" class="btn btn-primary">← Back to Home</a>
+<div style="margin-top: 2rem; text-align: center;">
+    <a href="{{ url_for('index') }}" class="btn btn-secondary">Back to Home</a>
 </div>
 {% endblock %}

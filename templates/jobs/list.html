@@ -5,43 +5,47 @@
 <div style="margin: 20px 0;">
     <a href="{{ url_for('create_job') }}" class="btn btn-success">+ Create New Job</a>
 </div>
-<table>
-    <thead>
-        <tr>
-            <th>ID</th>
-            <th>Posted By</th>
-            <th>Type Required</th>
-            <th>Date Posted</th>
-            <th>Requirements</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for job, user in jobs %}
-        <tr>
-            <td>{{ job.job_id }}</td>
-            <td>{{ user.given_name }} {{ user.surname }}</td>
-            <td><strong>{{ job.required_caregiving_type }}</strong></td>
-            <td>{{ job.date_posted }}</td>
-            <td>{{ (job.other_requirements or '')[:50] }}{% if job.other_requirements and job.other_requirements|length
-                > 50 %}...{% endif %}</td>
-            <td>
-                <div class="actions">
-                    <a href="{{ url_for('edit_job', job_id=job.job_id) }}" class="btn btn-warning">Edit</a>
-                    <form method="POST" action="{{ url_for('delete_job', job_id=job.job_id) }}"
-                        style="display: inline; margin: 0; padding: 0; background: none;">
-                        <button type="submit" class="btn btn-danger"
-                            onclick="return confirm('Delete this job?')">Delete</button>
-                    </form>
-                </div>
-            </td>
-        </tr>
-        {% else %}
-        <tr>
-            <td colspan="6" style="text-align: center; padding: 40px; color: #999;">No jobs found.</td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
+<div class="table-container">
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Member</th>
+                <th>Required Care</th>
+                <th>Other Requirements</th>
+                <th>Date Posted</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for job, user in jobs %}
+            <tr>
+                <td>{{ job.job_id }}</td>
+                <td>{{ user.given_name }} {{ user.surname }}</td>
+                <td>{{ job.required_caregiving_type }}</td>
+                <td>{{ (job.other_requirements or '')[:50] }}{% if job.other_requirements and
+                    job.other_requirements|length > 50 %}...{% endif %}</td>
+                <td>{{ job.date_posted }}</td>
+                <td>
+                    <div class="actions" style="display: flex; gap: 0.5rem;">
+                        <a href="{{ url_for('edit_job', job_id=job.job_id) }}" class="btn btn-warning"
+                            style="padding: 0.4rem 0.8rem; font-size: 0.85rem;">Edit</a>
+                        <form method="POST" action="{{ url_for('delete_job', job_id=job.job_id) }}"
+                            style="display: inline; margin: 0; padding: 0; background: none; border: none; box-shadow: none;">
+                            <button type="submit" class="btn btn-danger"
+                                style="padding: 0.4rem 0.8rem; font-size: 0.85rem;"
+                                onclick="return confirm('Delete this job?')">Delete</button>
+                        </form>
+                    </div>
+                </td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="6" style="text-align: center; padding: 3rem; color: var(--text-muted);">No jobs found.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
 <a href="{{ url_for('index') }}" class="btn btn-primary">← Back</a>
 {% endblock %}

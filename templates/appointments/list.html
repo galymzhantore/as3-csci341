@@ -5,51 +5,56 @@
 <div style="margin: 20px 0;">
     <a href="{{ url_for('create_appointment') }}" class="btn btn-success">+ Create New Appointment</a>
 </div>
-<table>
-    <thead>
-        <tr>
-            <th>ID</th>
-            <th>Caregiver</th>
-            <th>Member</th>
-            <th>Date</th>
-            <th>Time</th>
-            <th>Hours</th>
-            <th>Status</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for row in appointments %}
-        {% set appointment = row.Appointment %}
-        <tr>
-            <td>{{ appointment.appointment_id }}</td>
-            <td>{{ row.caregiver_name }} {{ row.caregiver_surname }}</td>
-            <td>{{ row.member_name }} {{ row.member_surname }}</td>
-            <td>{{ appointment.appointment_date }}</td>
-            <td>{{ appointment.appointment_time }}</td>
-            <td>{{ appointment.work_hours }}h</td>
-            <td>
-                <span class="badge badge-{{ appointment.status }}">{{ appointment.status }}</span>
-            </td>
-            <td>
-                <div class="actions">
-                    <a href="{{ url_for('edit_appointment', appointment_id=appointment.appointment_id) }}"
-                        class="btn btn-warning">Edit</a>
-                    <form method="POST"
-                        action="{{ url_for('delete_appointment', appointment_id=appointment.appointment_id) }}"
-                        style="display: inline; margin: 0; padding: 0; background: none;">
-                        <button type="submit" class="btn btn-danger"
-                            onclick="return confirm('Delete this appointment?')">Delete</button>
-                    </form>
-                </div>
-            </td>
-        </tr>
-        {% else %}
-        <tr>
-            <td colspan="8" style="text-align: center; padding: 40px; color: #999;">No appointments found.</td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
+<div class="table-container">
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Caregiver</th>
+                <th>Member</th>
+                <th>Date</th>
+                <th>Time</th>
+                <th>Hours</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for appointment in appointments %}
+            <tr>
+                <td>{{ appointment.Appointment.appointment_id }}</td>
+                <td>{{ appointment.caregiver_name }} {{ appointment.caregiver_surname }}</td>
+                <td>{{ appointment.member_name }} {{ appointment.member_surname }}</td>
+                <td>{{ appointment.Appointment.appointment_date }}</td>
+                <td>{{ appointment.Appointment.appointment_time }}</td>
+                <td>{{ appointment.Appointment.work_hours }}</td>
+                <td>
+                    <span class="status-badge status-{{ appointment.Appointment.status.lower() }}">
+                        {{ appointment.Appointment.status }}
+                    </span>
+                </td>
+                <td>
+                    <div class="actions" style="display: flex; gap: 0.5rem;">
+                        <a href="{{ url_for('edit_appointment', appointment_id=appointment.Appointment.appointment_id) }}"
+                            class="btn btn-warning" style="padding: 0.4rem 0.8rem; font-size: 0.85rem;">Edit</a>
+                        <form method="POST"
+                            action="{{ url_for('delete_appointment', appointment_id=appointment.Appointment.appointment_id) }}"
+                            style="display: inline; margin: 0; padding: 0; background: none; border: none; box-shadow: none;">
+                            <button type="submit" class="btn btn-danger"
+                                style="padding: 0.4rem 0.8rem; font-size: 0.85rem;"
+                                onclick="return confirm('Delete this appointment?')">Delete</button>
+                        </form>
+                    </div>
+                </td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="8" style="text-align: center; padding: 3rem; color: var(--text-muted);">No appointments
+                    found.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
 <a href="{{ url_for('index') }}" class="btn btn-primary">← Back</a>
 {% endblock %}

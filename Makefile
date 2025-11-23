@@ -26,7 +26,7 @@ db-docker:
 	docker exec -i postgres-csci341 psql -U postgres caregivers_platform < caregivers_platform_part1.sql
 
 part1:
-	psql caregivers_platform < caregivers_platform_part1.sql
+	PGHOST=localhost PGUSER=postgres PGPASSWORD=postgres psql caregivers_platform < caregivers_platform_part1.sql
 
 part2:
 	python3 caregivers_platform_part2.py

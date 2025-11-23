@@ -6,53 +6,65 @@
 <h1>Caregivers Platform</h1>
 <p style="margin-bottom: 30px; color: #666;">Database Management System for Caregiver Services</p>
 
-<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px;">
+<div class="grid-container">
     <div class="card">
-        <h3 style="margin-top: 0;">Users</h3>
+        <h3>Users</h3>
         <p>Manage user accounts for caregivers and members.</p>
-        <a href="{{ url_for('list_users') }}" class="btn btn-primary" style="margin-top: 10px;">
-            Manage Users
-        </a>
+        <div style="margin-top: auto;">
+            <a href="{{ url_for('list_users') }}" class="btn btn-primary">
+                Manage Users
+            </a>
+        </div>
     </div>
 
     <div class="card">
-        <h3 style="margin-top: 0;">Caregivers</h3>
+        <h3>Caregivers</h3>
         <p>View and manage caregiver profiles and rates.</p>
-        <a href="{{ url_for('list_caregivers') }}" class="btn btn-primary" style="margin-top: 10px;">
-            Manage Caregivers
-        </a>
+        <div style="margin-top: auto;">
+            <a href="{{ url_for('list_caregivers') }}" class="btn btn-primary">
+                Manage Caregivers
+            </a>
+        </div>
     </div>
 
     <div class="card">
-        <h3 style="margin-top: 0;">Members</h3>
+        <h3>Members</h3>
         <p>Manage member accounts and house rules.</p>
-        <a href="{{ url_for('list_members') }}" class="btn btn-primary" style="margin-top: 10px;">
-            Manage Members
-        </a>
+        <div style="margin-top: auto;">
+            <a href="{{ url_for('list_members') }}" class="btn btn-primary">
+                Manage Members
+            </a>
+        </div>
     </div>
 
     <div class="card">
-        <h3 style="margin-top: 0;">Jobs</h3>
+        <h3>Jobs</h3>
         <p>Create and manage caregiving job postings.</p>
-        <a href="{{ url_for('list_jobs') }}" class="btn btn-primary" style="margin-top: 10px;">
-            Manage Jobs
-        </a>
+        <div style="margin-top: auto;">
+            <a href="{{ url_for('list_jobs') }}" class="btn btn-primary">
+                Manage Jobs
+            </a>
+        </div>
     </div>
 
     <div class="card">
-        <h3 style="margin-top: 0;">Appointments</h3>
+        <h3>Appointments</h3>
         <p>Schedule and track appointments.</p>
-        <a href="{{ url_for('list_appointments') }}" class="btn btn-primary" style="margin-top: 10px;">
-            Manage Appointments
-        </a>
+        <div style="margin-top: auto;">
+            <a href="{{ url_for('list_appointments') }}" class="btn btn-primary">
+                Manage Appointments
+            </a>
+        </div>
     </div>
 
     <div class="card">
-        <h3 style="margin-top: 0;">Dashboard</h3>
+        <h3>Dashboard</h3>
         <p>View platform statistics and analytics.</p>
-        <a href="{{ url_for('dashboard') }}" class="btn btn-primary" style="margin-top: 10px;">
-            View Dashboard
-        </a>
+        <div style="margin-top: auto;">
+            <a href="{{ url_for('dashboard') }}" class="btn btn-primary">
+                View Dashboard
+            </a>
+        </div>
     </div>
 </div>
 {% endblock %}
