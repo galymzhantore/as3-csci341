@@ -86,7 +86,7 @@ def edit_user(user_id):
     """Edit an existing user"""
     session = Session()
     try:
-        user = session.query(User).get(user_id)
+        user = session.get(User, user_id)
         if not user:
             flash('User not found!', 'error')
             return redirect(url_for('list_users'))
@@ -112,7 +112,7 @@ def delete_user(user_id):
     """Delete a user"""
     session = Session()
     try:
-        user = session.query(User).get(user_id)
+        user = session.get(User, user_id)
         if user:
             session.delete(user)
             session.commit()
@@ -178,7 +178,7 @@ def edit_caregiver(caregiver_id):
     """Edit an existing caregiver"""
     session = Session()
     try:
-        caregiver = session.query(Caregiver).get(caregiver_id)
+        caregiver = session.get(Caregiver, caregiver_id)
         if not caregiver:
             flash('Caregiver not found!', 'error')
             return redirect(url_for('list_caregivers'))
@@ -193,7 +193,7 @@ def edit_caregiver(caregiver_id):
             flash('Caregiver updated successfully!', 'success')
             return redirect(url_for('list_caregivers'))
         
-        user = session.query(User).get(caregiver_id)
+        user = session.get(User, caregiver_id)
         return render_template('caregivers/edit.html', caregiver=caregiver, user=user)
     finally:
         session.close()
@@ -203,7 +203,7 @@ def delete_caregiver(caregiver_id):
     """Delete a caregiver"""
     session = Session()
     try:
-        caregiver = session.query(Caregiver).get(caregiver_id)
+        caregiver = session.get(Caregiver, caregiver_id)
         if caregiver:
             session.delete(caregiver)
             session.commit()
@@ -267,7 +267,7 @@ def edit_member(member_id):
     """Edit an existing member"""
     session = Session()
     try:
-        member = session.query(Member).get(member_id)
+        member = session.get(Member, member_id)
         if not member:
             flash('Member not found!', 'error')
             return redirect(url_for('list_members'))
@@ -280,7 +280,7 @@ def edit_member(member_id):
             flash('Member updated successfully!', 'success')
             return redirect(url_for('list_members'))
         
-        user = session.query(User).get(member_id)
+        user = session.get(User, member_id)
         return render_template('members/edit.html', member=member, user=user)
     finally:
         session.close()
@@ -290,7 +290,7 @@ def delete_member(member_id):
     """Delete a member"""
     session = Session()
     try:
-        member = session.query(Member).get(member_id)
+        member = session.get(Member, member_id)
         if member:
             session.delete(member)
             session.commit()
@@ -356,7 +356,7 @@ def edit_job(job_id):
     """Edit an existing job"""
     session = Session()
     try:
-        job = session.query(Job).get(job_id)
+        job = session.get(Job, job_id)
         if not job:
             flash('Job not found!', 'error')
             return redirect(url_for('list_jobs'))
@@ -379,7 +379,7 @@ def delete_job(job_id):
     """Delete a job"""
     session = Session()
     try:
-        job = session.query(Job).get(job_id)
+        job = session.get(Job, job_id)
         if job:
             session.delete(job)
             session.commit()
@@ -439,7 +439,7 @@ def create_appointment():
                 caregiver_user_id=request.form['caregiver_id'],
                 member_user_id=request.form['member_id'],
                 appointment_date=datetime.strptime(request.form['appointment_date'], '%Y-%m-%d').date(),
-                appointment_time=datetime.strptime(request.form['appointment_time'], '%H:%M').time(),
+                appointment_time=datetime.strptime(request.form['appointment_time'][:5], '%H:%M').time(),
                 work_hours=request.form['work_hours'],
                 status=request.form['status']
             )
@@ -467,14 +467,14 @@ def edit_appointment(appointment_id):
     """Edit an existing appointment"""
     session = Session()
     try:
-        appointment = session.query(Appointment).get(appointment_id)
+        appointment = session.get(Appointment, appointment_id)
         if not appointment:
             flash('Appointment not found!', 'error')
             return redirect(url_for('list_appointments'))
         
         if request.method == 'POST':
             appointment.appointment_date = datetime.strptime(request.form['appointment_date'], '%Y-%m-%d').date()
-            appointment.appointment_time = datetime.strptime(request.form['appointment_time'], '%H:%M').time()
+            appointment.appointment_time = datetime.strptime(request.form['appointment_time'][:5], '%H:%M').time()
             appointment.work_hours = request.form['work_hours']
             appointment.status = request.form['status']
             
@@ -491,7 +491,7 @@ def delete_appointment(appointment_id):
     """Delete an appointment"""
     session = Session()
     try:
-        appointment = session.query(Appointment).get(appointment_id)
+        appointment = session.get(Appointment, appointment_id)
         if appointment:
             session.delete(appointment)
             session.commit()
