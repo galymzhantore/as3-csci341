@@ -1,10 +1,3 @@
--- ============================================
--- CSCI 341 Assignment 3 - Part 1
--- Caregivers Platform Database
--- PostgreSQL Script
--- ============================================
-
--- Drop tables if they exist (for clean setup)
 DROP TABLE IF EXISTS JOB_APPLICATION CASCADE;
 DROP TABLE IF EXISTS APPOINTMENT CASCADE;
 DROP TABLE IF EXISTS JOB CASCADE;
@@ -13,11 +6,6 @@ DROP TABLE IF EXISTS MEMBER CASCADE;
 DROP TABLE IF EXISTS CAREGIVER CASCADE;
 DROP TABLE IF EXISTS "USER" CASCADE;
 
--- ============================================
--- CREATE TABLES
--- ============================================
-
--- USER table (base table for both caregivers and members)
 CREATE TABLE "USER" (
     user_id SERIAL PRIMARY KEY,
     email VARCHAR(255) UNIQUE NOT NULL,
@@ -29,7 +17,6 @@ CREATE TABLE "USER" (
     password VARCHAR(255) NOT NULL
 );
 
--- CAREGIVER table (inherits from USER)
 CREATE TABLE CAREGIVER (
     caregiver_user_id INTEGER PRIMARY KEY,
     photo VARCHAR(500),
@@ -39,7 +26,6 @@ CREATE TABLE CAREGIVER (
     FOREIGN KEY (caregiver_user_id) REFERENCES "USER"(user_id) ON DELETE CASCADE
 );
 
--- MEMBER table (families seeking caregivers)
 CREATE TABLE MEMBER (
     member_user_id INTEGER PRIMARY KEY,
     house_rules TEXT,
@@ -47,7 +33,6 @@ CREATE TABLE MEMBER (
     FOREIGN KEY (member_user_id) REFERENCES "USER"(user_id) ON DELETE CASCADE
 );
 
--- ADDRESS table (member addresses)
 CREATE TABLE ADDRESS (
     member_user_id INTEGER PRIMARY KEY,
     house_number VARCHAR(20) NOT NULL,
@@ -56,7 +41,6 @@ CREATE TABLE ADDRESS (
     FOREIGN KEY (member_user_id) REFERENCES MEMBER(member_user_id) ON DELETE CASCADE
 );
 
--- JOB table (job postings by members)
 CREATE TABLE JOB (
     job_id SERIAL PRIMARY KEY,
     member_user_id INTEGER NOT NULL,
@@ -66,7 +50,6 @@ CREATE TABLE JOB (
     FOREIGN KEY (member_user_id) REFERENCES MEMBER(member_user_id) ON DELETE CASCADE
 );
 
--- JOB_APPLICATION table (caregivers applying to jobs)
 CREATE TABLE JOB_APPLICATION (
     caregiver_user_id INTEGER NOT NULL,
     job_id INTEGER NOT NULL,
@@ -76,7 +59,6 @@ CREATE TABLE JOB_APPLICATION (
     FOREIGN KEY (job_id) REFERENCES JOB(job_id) ON DELETE CASCADE
 );
 
--- APPOINTMENT table (appointments between members and caregivers)
 CREATE TABLE APPOINTMENT (
     appointment_id SERIAL PRIMARY KEY,
     caregiver_user_id INTEGER NOT NULL,
@@ -89,16 +71,7 @@ CREATE TABLE APPOINTMENT (
     FOREIGN KEY (member_user_id) REFERENCES MEMBER(member_user_id) ON DELETE CASCADE
 );
 
--- ============================================
--- INSERT SAMPLE DATA
--- ============================================
-
--- Insert USERS (both caregivers and members)
--- Users 1-10 will be caregivers
--- Users 11-20 will be members
-
 INSERT INTO "USER" (email, given_name, surname, city, phone_number, profile_description, password) VALUES
--- Caregivers (1-10)
 ('arman.armanov@example.com', 'Arman', 'Armanov', 'Astana', '+77771234567', 'Experienced babysitter with 5 years of experience. Love working with children.', 'password123'),
 ('sara.sarikova@example.com', 'Sara', 'Sarikova', 'Astana', '+77771234568', 'Professional elderly caregiver. Certified nurse with gentle approach.', 'password123'),
 ('dana.dankova@example.com', 'Dana', 'Dankova', 'Almaty', '+77771234569', 'Energetic playmate for children. Arts and crafts specialist.', 'password123'),
@@ -109,8 +82,6 @@ INSERT INTO "USER" (email, given_name, surname, city, phone_number, profile_desc
 ('yerlan.yerlanov@example.com', 'Yerlan', 'Yerlanov', 'Astana', '+77771234574', 'Professional babysitter. CPR certified.', 'password123'),
 ('azamat.azamatov@example.com', 'Azamat', 'Azamatov', 'Almaty', '+77771234575', 'Elderly care specialist with 10 years experience.', 'password123'),
 ('madina.madinova@example.com', 'Madina', 'Madinova', 'Astana', '+77771234576', 'Child playmate. Creative and fun activities.', 'password123'),
-
--- Members (11-20)
 ('amina.aminova@example.com', 'Amina', 'Aminova', 'Astana', '+77779876543', 'Mother of two looking for reliable childcare.', 'password456'),
 ('kanat.kanatov@example.com', 'Kanat', 'Kanatov', 'Astana', '+77779876544', 'Need elderly care for my mother.', 'password456'),
 ('laura.laurova@example.com', 'Laura', 'Laurova', 'Almaty', '+77779876545', 'Looking for weekend babysitter.', 'password456'),
@@ -122,7 +93,6 @@ INSERT INTO "USER" (email, given_name, surname, city, phone_number, profile_desc
 ('aida.aidanova@example.com', 'Aida', 'Aidanova', 'Astana', '+77779876551', 'Looking for elderly caregiver.', 'password456'),
 ('ruslan.ruslanov@example.com', 'Ruslan', 'Ruslanov', 'Almaty', '+77779876552', 'Need childcare for toddler.', 'password456');
 
--- Insert CAREGIVERS
 INSERT INTO CAREGIVER (caregiver_user_id, photo, gender, caregiving_type, hourly_rate) VALUES
 (1, 'https://example.com/photos/arman.jpg', 'Male', 'Babysitter', 8.50),
 (2, 'https://example.com/photos/sara.jpg', 'Female', 'Elderly Care', 12.00),
@@ -135,7 +105,6 @@ INSERT INTO CAREGIVER (caregiver_user_id, photo, gender, caregiving_type, hourly
 (9, 'https://example.com/photos/azamat.jpg', 'Male', 'Elderly Care', 13.00),
 (10, 'https://example.com/photos/madina.jpg', 'Female', 'Playmate', 7.50);
 
--- Insert MEMBERS
 INSERT INTO MEMBER (member_user_id, house_rules, dependent_description) VALUES
 (11, 'No smoking. Please remove shoes at entrance.', 'I have a 5-year-old daughter who loves painting and drawing.'),
 (12, 'No pets. Punctuality is important.', 'My 78-year-old mother needs assistance with daily activities.'),
@@ -148,7 +117,6 @@ INSERT INTO MEMBER (member_user_id, house_rules, dependent_description) VALUES
 (19, 'No pets. Patient and soft-spoken caregiver needed.', 'Grandmother, 80, recovering from surgery.'),
 (20, 'No allergies. Organic food only.', '2-year-old toddler with food allergies.');
 
--- Insert ADDRESSES
 INSERT INTO ADDRESS (member_user_id, house_number, street, town) VALUES
 (11, '45', 'Kabanbay Batyr', 'Esil District'),
 (12, '12', 'Respublika Avenue', 'Saryarka District'),
@@ -161,7 +129,6 @@ INSERT INTO ADDRESS (member_user_id, house_number, street, town) VALUES
 (19, '15', 'Kenesary Street', 'Almaty District'),
 (20, '90', 'Samal Street', 'Esil District');
 
--- Insert JOBS
 INSERT INTO JOB (member_user_id, required_caregiving_type, other_requirements, date_posted) VALUES
 (11, 'Babysitter', 'Must be patient and creative. Experience with arts and crafts preferred.', '2024-11-01'),
 (12, 'Elderly Care', 'Should be soft-spoken and gentle. Medical background required.', '2024-11-02'),
@@ -174,7 +141,6 @@ INSERT INTO JOB (member_user_id, required_caregiving_type, other_requirements, d
 (19, 'Elderly Care', 'Post-surgery care. Medical knowledge required. Must be soft-spoken.', '2024-11-09'),
 (20, 'Babysitter', 'Knowledge of food allergies. Experience with toddlers.', '2024-11-10');
 
--- Insert JOB_APPLICATIONS
 INSERT INTO JOB_APPLICATION (caregiver_user_id, job_id, date_applied) VALUES
 (1, 1, '2024-11-02'),
 (5, 1, '2024-11-03'),
@@ -197,7 +163,6 @@ INSERT INTO JOB_APPLICATION (caregiver_user_id, job_id, date_applied) VALUES
 (7, 9, '2024-11-10'),
 (2, 9, '2024-11-11');
 
--- Insert APPOINTMENTS
 INSERT INTO APPOINTMENT (caregiver_user_id, member_user_id, appointment_date, appointment_time, work_hours, status) VALUES
 (1, 11, '2024-11-15', '09:00:00', 4, 'accepted'),
 (2, 12, '2024-11-16', '10:00:00', 6, 'accepted'),
@@ -210,11 +175,6 @@ INSERT INTO APPOINTMENT (caregiver_user_id, member_user_id, appointment_date, ap
 (9, 19, '2024-11-23', '10:00:00', 6, 'accepted'),
 (10, 20, '2024-11-24', '13:00:00', 2, 'accepted');
 
--- ============================================
--- VERIFICATION QUERIES
--- ============================================
-
--- Check record counts
 SELECT 'USER' as table_name, COUNT(*) as record_count FROM "USER"
 UNION ALL
 SELECT 'CAREGIVER', COUNT(*) FROM CAREGIVER
@@ -229,30 +189,24 @@ SELECT 'JOB_APPLICATION', COUNT(*) FROM JOB_APPLICATION
 UNION ALL
 SELECT 'APPOINTMENT', COUNT(*) FROM APPOINTMENT;
 
--- Verify data for Part 2 queries
 SELECT '=== Verification for Part 2 Queries ===' as info;
 
--- Check Arman Armanov exists
 SELECT 'Arman Armanov found:', given_name, surname, phone_number 
 FROM "USER" 
 WHERE given_name = 'Arman' AND surname = 'Armanov';
 
--- Check Amina Aminova exists
 SELECT 'Amina Aminova found:', given_name, surname 
 FROM "USER" 
 WHERE given_name = 'Amina' AND surname = 'Aminova';
 
--- Check Kabanbay Batyr street addresses
 SELECT 'Kabanbay Batyr addresses:', COUNT(*) 
 FROM ADDRESS 
 WHERE street = 'Kabanbay Batyr';
 
--- Check soft-spoken requirement
 SELECT 'Jobs with soft-spoken:', COUNT(*) 
 FROM JOB 
 WHERE other_requirements ILIKE '%soft-spoken%';
 
--- Check Astana Elderly Care with No pets
 SELECT 'Astana Elderly Care (No pets):', COUNT(*) 
 FROM MEMBER m
 JOIN "USER" u ON m.member_user_id = u.user_id
@@ -261,12 +215,10 @@ WHERE u.city = 'Astana'
 AND j.required_caregiving_type = 'Elderly Care'
 AND m.house_rules ILIKE '%No pets%';
 
--- Check accepted appointments
 SELECT 'Accepted appointments:', COUNT(*) 
 FROM APPOINTMENT 
 WHERE status = 'accepted';
 
--- Check babysitter positions with work hours
 SELECT 'Babysitter appointments:', COUNT(*)
 FROM APPOINTMENT a
 JOIN CAREGIVER c ON a.caregiver_user_id = c.caregiver_user_id

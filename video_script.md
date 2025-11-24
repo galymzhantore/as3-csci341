@@ -1,4 +1,4 @@
-# Video Presentation Script: Online Caregivers Platform
+=# Video Presentation Script: Online Caregivers Platform
 **Course:** CSCI 341 - Database Management Systems  
 **Assignment:** 3  
 **Target Length:** ~8 minutes
