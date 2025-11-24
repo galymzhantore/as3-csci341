@@ -33,6 +33,9 @@ app.secret_key = 'your-secret-key-change-in-production'
 engine = create_engine(DATABASE_URL)
 Session = sessionmaker(bind=engine)
 
+# Create tables if they don't exist
+Base.metadata.create_all(engine)
+
 # ============================================
 # HOME ROUTE
 # ============================================
